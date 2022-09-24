@@ -14,32 +14,6 @@ export const getUser = async () => {
   }
 }
 
-export const getStores = async (userId) => {
-  try {
-    const response = await fetch(
-      `https://api.mercadopago.com/stores/${userId}`,
-      {
-        headers: {
-          'Content-Type': 'aplication/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN_PROD_MP}`
-        }
-      }
-    )
-    const data = await response.json()
-    console.log(data)
-    return data
-  } catch (error) {
-    return error
-  }
-}
-
-export const createStore = async () => {
-  const { id } = await getUser()
-  const stores = await getStores(id)
-
-  console.log(stores)
-}
-
 export const createPreference = async (itemId, title, quantity) => {
   const data = {
     items: [

@@ -1,5 +1,4 @@
 import dbConnect from '../lib/dbConnect'
-import { createPayment } from '../server/controllers/mp.controller'
 import User from '../models/User'
 import Link from 'next/link'
 
