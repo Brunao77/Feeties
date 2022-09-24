@@ -1,75 +1,81 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
 import dbConnect from '../../lib/dbConnect'
-import Pet from '../../models/Pet'
+import User from '../../models/User'
+import Donation from '../../components/Donation'
+import Description from '../../components/Description'
 
-/* Allows you to view pet card info and delete pet card*/
-const PetPage = ({ pet }) => {
-  const router = useRouter()
-  const [message, setMessage] = useState('')
-  const handleDelete = async () => {
-    const petID = router.query.id
-
-    try {
-      await fetch(`/api/pets/${petID}`, {
-        method: 'Delete',
-      })
-      router.push('/')
-    } catch (error) {
-      setMessage('Failed to delete the pet.')
-    }
-  }
-
+const UserPage = ({ user }) => {
   return (
-    <div key={pet._id}>
-      <div className="card">
-        <img src={pet.image_url} />
-        <h5 className="pet-name">{pet.name}</h5>
-        <div className="main-content">
-          <p className="pet-name">{pet.name}</p>
-          <p className="owner">Owner: {pet.owner_name}</p>
-
-          {/* Extra Pet Info: Likes and Dislikes */}
-          <div className="likes info">
-            <p className="label">Likes</p>
-            <ul>
-              {pet.likes.map((data, index) => (
-                <li key={index}>{data} </li>
-              ))}
-            </ul>
-          </div>
-          <div className="dislikes info">
-            <p className="label">Dislikes</p>
-            <ul>
-              {pet.dislikes.map((data, index) => (
-                <li key={index}>{data} </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="btn-container">
-            <Link href="/[id]/edit" as={`/${pet._id}/edit`}>
-              <button className="btn edit">Edit</button>
-            </Link>
-            <button className="btn delete" onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
-        </div>
+    <>
+      <section>
+        <img className="banner-photo" src={user.banner_photo} />
+        <img className="profile-photo" src={user.profile_photo} />
+      </section>
+      <h1>{user.username}</h1>
+      <div>
+        <Description
+          description={user.description}
+          instagram={user.instagram}
+          twitter={user.twitter}
+        />
+        <Donation />
       </div>
-      {message && <p>{message}</p>}
-    </div>
+      <style jsx>
+        {`
+          section {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+          .banner-photo {
+            width: 100%;
+            height: 250px;
+            border-radius: 5px;
+          }
+          .profile-photo {
+            position: relative;
+            top: -50px;
+            width: 120px;
+            height: 120px;
+            border-radius: 999px;
+            border: 5px solid #fff;
+          }
+          div {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: auto auto;
+          }
+          @media (max-width: 750px) {
+            div {
+              gap: 10px;
+              grid-template-columns: auto;
+              justify-items: center;
+            }
+            h1 {
+              margin: 0;
+            }
+            .profile-photo {
+              width: 120px;
+              height: 120px;
+            }
+          }
+        `}
+      </style>
+    </>
   )
 }
 
 export async function getServerSideProps({ params }) {
   await dbConnect()
 
-  const pet = await Pet.findById(params.id).lean()
-  pet._id = pet._id.toString()
+  const data = await User.findById(params.id).lean()
+  const user = JSON.parse(JSON.stringify(data))
 
-  return { props: { pet } }
+  return { props: { user } }
 }
 
-export default PetPage
+export default UserPage

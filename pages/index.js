@@ -1,65 +1,89 @@
-import Link from 'next/link'
 import dbConnect from '../lib/dbConnect'
-import Pet from '../models/Pet'
+import { createPayment } from '../server/controllers/mp.controller'
+import User from '../models/User'
+import Link from 'next/link'
 
-const Index = ({ pets }) => (
-  <>
-    {/* Create a card for each pet */}
-    {pets.map((pet) => (
-      <div key={pet._id}>
-        <div className="card">
-          <img src={pet.image_url} />
-          <h5 className="pet-name">{pet.name}</h5>
-          <div className="main-content">
-            <p className="pet-name">{pet.name}</p>
-            <p className="owner">Owner: {pet.owner_name}</p>
-
-            {/* Extra Pet Info: Likes and Dislikes */}
-            <div className="likes info">
-              <p className="label">Likes</p>
-              <ul>
-                {pet.likes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
-            <div className="dislikes info">
-              <p className="label">Dislikes</p>
-              <ul>
-                {pet.dislikes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="btn-container">
-              <Link href="/[id]/edit" as={`/${pet._id}/edit`}>
-                <button className="btn edit">Edit</button>
-              </Link>
-              <Link href="/[id]" as={`/${pet._id}`}>
-                <button className="btn view">View</button>
-              </Link>
-            </div>
-          </div>
-        </div>
+const Index = ({ users }) => {
+  return (
+    <>
+      <div>
+        {users.map((user, index) => (
+          <Link key={index} href={`/${user._id}`}>
+            <a>
+              <article>
+                <img src={user.banner_photo} />
+                <h2>{user.username}</h2>
+                <span>{user.city}</span>
+              </article>
+            </a>
+          </Link>
+        ))}
       </div>
-    ))}
-  </>
-)
+      <style jsx>
+        {`
+          div {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: auto auto auto;
+          }
+          a {
+            color: black;
+            text-decoration: none;
+            background: white;
+            border-radius: 10px;
+          }
+          article {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 20px;
+            width: max(18vw, 200px);
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgb(0 0 0 / 10%);
+          }
+          img {
+            width: 100%;
+            border-radius: 10px 10px 0 0;
+          }
+          h2 {
+            margin: 0;
+          }
+          @media (max-width: 750px) {
+            div {
+              gap: 10px;
+              grid-template-columns: auto auto;
+            }
+            article {
+              width: 150px;
+            }
+            img {
+              height: 70px;
+            }
+            h2 {
+              font-size: 20px;
+            }
+            span {
+              font-size: 15px;
+            }
+          }
+        `}
+      </style>
+    </>
+  )
+}
 
-/* Retrieves pet(s) data from mongodb database */
 export async function getServerSideProps() {
   await dbConnect()
 
-  /* find all the data in our database */
-  const result = await Pet.find({})
-  const pets = result.map((doc) => {
-    const pet = doc.toObject()
-    pet._id = pet._id.toString()
-    return pet
+  const result = await User.find({})
+  const users = result.map((doc) => {
+    const user = JSON.parse(JSON.stringify(doc))
+    return user
   })
-
-  return { props: { pets: pets } }
+  return { props: { users } }
 }
 
 export default Index
