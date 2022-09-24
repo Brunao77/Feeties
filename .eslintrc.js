@@ -18,7 +18,6 @@ module.exports = {
     'multiline-ternary': 'off',
     indent: 'off',
     'react/no-unescaped-entities': 'off',
-    'react/no-unknown-property': 'off',
-    'quote-props': 'always'
+    'react/no-unknown-property': 'off'
   }
 }
