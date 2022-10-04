@@ -1,6 +1,7 @@
 import dbConnect from '../lib/dbConnect'
 import User from '../models/User'
 import Link from 'next/link'
+import { breakpoints, colors, fonts } from '../styles/theme'
 
 const Index = ({ users }) => {
   return (
@@ -28,9 +29,9 @@ const Index = ({ users }) => {
             grid-template-columns: auto auto auto;
           }
           a {
-            color: black;
+            color: ${colors.black};
             text-decoration: none;
-            background: white;
+            background: ${colors.white};
             border-radius: 10px;
           }
           article {
@@ -50,7 +51,10 @@ const Index = ({ users }) => {
           h2 {
             margin: 0;
           }
-          @media (max-width: 750px) {
+          span {
+            font-size: ${fonts.text.desktop};
+          }
+          @media (max-width: ${breakpoints.mobile}) {
             div {
               gap: 10px;
               grid-template-columns: auto auto;

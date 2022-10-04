@@ -1,4 +1,5 @@
 import Navbar from './Navbar'
+import { breakpoints } from '../styles/theme'
 
 const Layout = ({ children }) => {
   return (
@@ -21,7 +22,7 @@ const Layout = ({ children }) => {
             max-width: 1000px;
             padding-top: 80px;
           }
-          @media (max-width: 750px) {
+          @media (max-width: ${breakpoints.mobile}) {
             main {
               max-width: 100%;
               padding-top: 10px;

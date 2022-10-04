@@ -1,3 +1,5 @@
+import { breakpoints, colors, fonts } from '../styles/theme'
+
 const Description = ({ description, instagram, twitter }) => {
   return (
     <>
@@ -9,12 +11,12 @@ const Description = ({ description, instagram, twitter }) => {
         <h3>Contacto</h3>
         <section className="contact-section">
           {twitter && (
-            <a href={twitter} target="_blank">
+            <a href={twitter} target="_blank" rel="noreferrer">
               <img src="/twitter.svg" />
             </a>
           )}
           {instagram && (
-            <a href={instagram} target="_blank">
+            <a href={instagram} target="_blank" rel="noreferrer">
               <img src="/instagram.svg" />
             </a>
           )}
@@ -28,11 +30,12 @@ const Description = ({ description, instagram, twitter }) => {
             border-radius: 10px;
             padding: 10px;
             width: 100%;
-            background: white;
+            background: ${colors.white};
             gap: 10px;
             box-shadow: 5px 5px 10px rgb(0 0 0 / 10%);
           }
           h3 {
+            font-size: ${fonts.subtitle.desktop};
             margin: 0;
           }
           section {
@@ -40,6 +43,7 @@ const Description = ({ description, instagram, twitter }) => {
             word-wrap: break-word;
           }
           p {
+            font-size: ${fonts.text.desktop};
             margin: 0;
           }
           .contact-section {
@@ -50,7 +54,7 @@ const Description = ({ description, instagram, twitter }) => {
             width: 30px;
             height: 30px;
           }
-          @media (max-width: 750px) {
+          @media (max-width: ${breakpoints.mobile}) {
             article {
               max-width: 350px;
             }

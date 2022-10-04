@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { FaUserAlt } from 'react-icons/fa'
 import { BsSearch } from 'react-icons/bs'
+import { breakpoints, colors } from '../styles/theme'
 
 const Navbar = () => {
   return (
@@ -18,7 +18,7 @@ const Navbar = () => {
               <BsSearch />
             </button>
           </section>
-          {/*<section className="options-section">
+          {/* <section className="options-section">
             <Link href="/">
               <a>Perdidos</a>
             </Link>
@@ -26,7 +26,7 @@ const Navbar = () => {
               <a>Adopcion</a>
             </Link>
             <FaUserAlt color="white" size="30" />
-  </section>*/}
+  </section> */}
         </nav>
       </div>
       <style jsx>
@@ -35,7 +35,7 @@ const Navbar = () => {
             height: 100%;
             width: 100%;
             box-shadow: none;
-            background: red;
+            background: ${colors.primary};
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
             position: sticky;
             position: sticky;
@@ -62,7 +62,7 @@ const Navbar = () => {
             align-items: center;
             max-width: 450px;
             width: 100%;
-            background: white;
+            background: ${colors.white};
             border-radius: 10px;
             padding: 0 10px 0 10px;
           }
@@ -82,7 +82,7 @@ const Navbar = () => {
             gap: 30px;
           }
           a {
-            color: white;
+            color: ${colors.white};
             text-decoration: none;
           }
           input {
@@ -94,7 +94,7 @@ const Navbar = () => {
           input:focus {
             outline: none;
           }
-          @media (max-width: 750px) {
+          @media (max-width: ${breakpoints.mobile}) {
             img {
               width: 40px;
               height: 40px;

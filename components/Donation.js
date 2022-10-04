@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { createPayment } from '../server/controllers/mp.controller'
+import { breakpoints, colors, fonts } from '../styles/theme'
 
 const PAY_STATES = {
   TO_PAY: 0,
@@ -59,7 +60,7 @@ const Donation = () => {
       <form onSubmit={handleSubmit}>
         {pay === PAY_STATES.TO_PAY && (
           <>
-            <span>¡AYUDO CON!</span>
+            <span>AYUDO CON</span>
             <input
               type="number"
               min="1"
@@ -88,11 +89,11 @@ const Donation = () => {
             padding: 10px;
             height: 100%;
             width: 100%;
-            background: white;
+            background: ${colors.white};
             box-shadow: 5px 5px 10px rgb(0 0 0 / 10%);
           }
           span {
-            font-size: 16px;
+            font-size: ${fonts.subtitle.desktop};
             font-weight: 800;
           }
           button {
@@ -123,7 +124,7 @@ const Donation = () => {
             height: 40px;
             cursor: pointer;
           }
-          @media (max-width: 750px) {
+          @media (max-width: ${breakpoints.mobile}) {
             form {
               max-width: 350px;
             }

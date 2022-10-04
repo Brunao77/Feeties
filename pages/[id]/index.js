@@ -2,6 +2,7 @@ import dbConnect from '../../lib/dbConnect'
 import User from '../../models/User'
 import Donation from '../../components/Donation'
 import Description from '../../components/Description'
+import { breakpoints, colors, fonts } from '../../styles/theme'
 
 const UserPage = ({ user }) => {
   return (
@@ -40,7 +41,10 @@ const UserPage = ({ user }) => {
             width: 120px;
             height: 120px;
             border-radius: 999px;
-            border: 5px solid #fff;
+            border: 5px solid ${colors.white};
+          }
+          h1 {
+            font-size: ${fonts.title.desktop};
           }
           div {
             width: 100%;
@@ -49,7 +53,7 @@ const UserPage = ({ user }) => {
             gap: 20px;
             grid-template-columns: auto auto;
           }
-          @media (max-width: 750px) {
+          @media (max-width: ${breakpoints.mobile}) {
             div {
               gap: 10px;
               grid-template-columns: auto;
